@@ -90,6 +90,81 @@ $('.wd5').click(function () {
 });
 
 
+
+
+
+
+async function loc() {
+
+	function getLocation() {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(showPosition);
+		} else {
+			weather(17.9712, -76.7929);
+			todayWeather(17.9712, -76.7929);
+		}
+	}
+
+	function showPosition(position) {
+		let lat1 = position.coords.latitude;
+		let lon1 = position.coords.longitude;
+		weather(lat1,lon1);
+		todayWeather(lat1,lon1);
+	}
+
+	getLocation();
+}
+
+loc();
+
+function success() {
+	console.log('SUCCESS!');
+  }
+  
+  function error() {
+		weather(17.9712, -76.7929);
+		todayWeather(17.9712, -76.7929);
+  }
+  
+  let options = {
+	
+  };
+  
+  let locationState = navigator.geolocation.watchPosition(success, error, options);
+
+
+
+
+
+
+$('#searchButton').on("click", function search () {
+	
+	let searchCity = document.getElementById("searchTerm").value;
+	let xhr = new XMLHttpRequest();
+	xhr.open('GET', 'http://api.openweathermap.org/data/2.5/weather?q=' + searchCity + '&units=metric&APPID=9b0f8968979638ed09e533379a5e798f', false);
+	xhr.send();
+	if (xhr.status != 200) {
+		console.log(xhr.status + ': ' + xhr.statusText);
+	} else {
+		console.log(xhr.responseText);
+	}
+	let json = JSON.parse(xhr.responseText);
+	
+	let latS = json.coord.lat;
+	let lonS = json.coord.lon;
+	weather(latS,lonS);
+	todayWeather(latS,lonS);
+})
+
+
+
+
+
+
+
+
+
+
 let today = new Date();
 let date = today.getDate() + '.' + (today.getMonth() + 1) + '.' + today.getFullYear();
 
@@ -97,12 +172,13 @@ $('.cur-date').text(date);
 
 
 
-function todayWeather() {
-
-	let citySearchCur = 'Kyiv';
-
+function todayWeather(lat,lon) {
 	let xhr = new XMLHttpRequest();
-	xhr.open('GET', 'http://api.openweathermap.org/data/2.5/weather?q=' + citySearchCur + '&units=metric&APPID=9b0f8968979638ed09e533379a5e798f', false);
+	xhr.open('GET', 'http://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&units=metric&APPID=9b0f8968979638ed09e533379a5e798f', false);
+	// let citySearchCur = 'Kyiv';
+
+	// let xhr = new XMLHttpRequest();
+	// xhr.open('GET', 'http://api.openweathermap.org/data/2.5/weather?q=' + citySearchCur + '&units=metric&APPID=9b0f8968979638ed09e533379a5e798f', false);
 	xhr.send();
 	if (xhr.status != 200) {
 		console.log(xhr.status + ': ' + xhr.statusText);
@@ -112,6 +188,9 @@ function todayWeather() {
 	let json = JSON.parse(xhr.responseText);
 
 	// CURRENT WEATHER TODAY
+	let curCity = json.name;
+	let curCountry = json.sys.country;
+	$('#cur-city').html(curCity + ', ' +curCountry);
 
 	let icon = json.weather[0].icon;
 	$('.cur-weather-icon').attr('src', 'https://openweathermap.org/img/wn/' + icon + '.png');
@@ -135,41 +214,16 @@ function todayWeather() {
 	let durM = Math.round((dur - durH) * 60);
 	$('.duration').html((durH < 10 ? '0' : '') + durH + ':' + (durM < 10 ? '0' : '') + durM);
 };
-todayWeather();
 
 
-let lat1 = $('#lat');
-let lon1 = $('#lon');
-
-function getLocation() {
-	if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(showPosition);
-	} else {
-		x.innerHTML = "Geolocation is not supported by this browser.";
-	}
-}
-
-function showPosition(position) {
-	lat1.text(position.coords.latitude);
-	lon1.text(position.coords.longitude);
-}
-
-getLocation();
 
 
-function weather() {
 
-	
-	// let lat = 50;
-	// let lon = 30;
 
-	// let xhr = new XMLHttpRequest();
-	// xhr.open('GET', 'http://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&units=metric&APPID=9b0f8968979638ed09e533379a5e798f', false);
-
-	let citySearchCur = 'Kyiv';
+function weather(lat, lon) {
 
 	let xhr = new XMLHttpRequest();
-	xhr.open('GET', 'http://api.openweathermap.org/data/2.5/forecast?q=' + citySearchCur + '&units=metric&APPID=9b0f8968979638ed09e533379a5e798f', false);
+	xhr.open('GET', 'http://api.openweathermap.org/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&units=metric&APPID=9b0f8968979638ed09e533379a5e798f', false);
 	xhr.send();
 	if (xhr.status != 200) {
 		console.log(xhr.status + ': ' + xhr.statusText);
@@ -189,7 +243,7 @@ function weather() {
 			let todayDay = weatherDate.getDate();
 			let weatherDay = today.getDate();
 
-			
+
 
 			if (todayDay == weatherDay) {
 				document.querySelector('.hours-forecast').innerHTML += '<span>' + weatherDateTime + ':00' + '</span> ';
@@ -247,6 +301,7 @@ function weather() {
 			let month = ['', 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 
 			function everyday() {
+				$('.weekday')[i].innerHTML = '';
 				if (wDay == today.getDate()) {
 					$('.weekday')[i].innerHTML += '<span class="week-title">Today<br></span>';
 				} else {
@@ -257,39 +312,17 @@ function weather() {
 
 				function hourly1() {
 
-					// for (let i = 0; i < 40; i++) {
-					// 	let weatherDateJson = json.list[i].dt;
-					// 	let weatherDate = new Date(weatherDateJson * 1000);
-					// 	let weatherDateTime = weatherDate.getHours();
-					// 	let todayDay = weatherDate.getDate();
-					// 	let weatherDay = today.getDate();
-
-					// 	if (todayDay == weatherDay) {
-					// 		document.querySelector('.hours-forecast').innerHTML += '<span>' + weatherDateTime + ':00' + '</span> ';
-
-					// 		let iconForecast = json.list[i].weather[0].icon;
-					// 		document.querySelector('.icons-forecast').innerHTML += '<div><img src="https://openweathermap.org/img/wn/' + iconForecast + '.png"></div>';
-
-					// 		let tempForecast = json.list[i].main.temp;
-					// 		document.querySelector('.temp-forecast').innerHTML += '<span>' + Math.round(tempForecast) + ' &deg;C' + '</span>';
-
-					// 		let windForecast = json.list[i].wind.speed;
-					// 		document.querySelector('.wind-forecast').innerHTML += '<span>' + windForecast.toFixed(1) + ' m/s' + '</span>';
-					// 	}
-
-					// }
-
-					// if ($('.hours-forecast').text() == '') {
-					// 	$('.hourly-forecast').html('There is no current 3-hour forecast for today <b>&#9785;</b> <br> Come back tomorrow for more!');
-					// 	$('.hourly-forecast').css('text-align', 'center');
-					// }
-
 					let arWeek = arrayWeek[i];
+					
 					for (let i = 0; i < 40; i++) {
 						let arDate = String(array[i].dt_txt)[8] + String(array[i].dt_txt)[9];
+						// console.log('arWeek'+i+'= '+arWeek);
+						console.log('arDate'+i+'= '+arDate); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 						if (arWeek = arDate) {
 
 							// document.querySelector('.hours-forecastW').innerHTML += '<span>' + weatherDateTime + ':00' + '</span> ';
+							let dateForecast = json.list[i].dt_txt;
+							document.querySelector('.hours-forecastW').innerHTML += '<span>' + dateForecast + ' &deg;C' + '</span>';
 
 							let iconForecast = json.list[i].weather[0].icon;
 							document.querySelector('.icons-forecastW').innerHTML += '<div><img src="https://openweathermap.org/img/wn/' + iconForecast + '.png"></div>';
@@ -308,12 +341,7 @@ function weather() {
 
 			};
 
-			// if (arrayWeek[i] == wDay) {
-			// 	everyday();
-			// }
-			// else if (arrayWeek[i] == wDay + 1) {
 			everyday();
-			// }
 
 		}
 	};
@@ -321,44 +349,7 @@ function weather() {
 
 };
 
-weather();
 
 
 
 
-
-
-
-
-
-
-
-
-
-// $('.searchButton').on('click', function (){
-// let citySearch = $('.searchTerm').val();
-
-// let xhr = new XMLHttpRequest();
-// xhr.open('GET', 'http://api.openweathermap.org/data/2.5/weather?q='+ citySearch +'&units=metric&APPID=9b0f8968979638ed09e533379a5e798f', false);
-// xhr.send();
-
-
-
-// if (xhr.status != 200) {
-// 	console.log( xhr.status + ': ' + xhr.statusText );
-// } else {
-// 	console.log( xhr.responseText );
-// }
-
-// console.log(JSON.parse(xhr.responseText));
-
-// let json = JSON.parse(xhr.responseText);
-// let yourIcon = json.weather[0].main; 
-// let yourTemp = json.main.temp; 
-// $('.cur-weather').text(yourIcon);
-// $('.temp').text(yourTemp);
-
-// console.log(yourIcon);
-// console.log(yourTemp);
-
-// })

@@ -12,6 +12,7 @@ body {
 	margin: auto;
 	font-family: 'Poppins', sans-serif;
 	background-color: #f6f6f6;
+	position: relative;
 }
 
 .page-header .container {
@@ -43,7 +44,7 @@ body {
   display: flex;
 }
 
-.searchTerm {
+#searchTerm {
   width: 100%;
   border: 3px solid #009595;
   border-right: none;
@@ -54,11 +55,11 @@ body {
   color: #9DBFAF;
 }
 
-.searchTerm:focus{
+#searchTerm:focus{
   color: #009595;
 }
 
-.searchButton {
+#searchButton {
   width: 40px;
   height: 36px;
   border: 1px solid #009595;
@@ -70,7 +71,7 @@ body {
   font-size: 20px;
 }
 
-.searchButton svg {
+#searchButton svg {
 	fill: white;
 }
 
@@ -100,6 +101,15 @@ body {
 	border-bottom: 2px solid transparent;
 	border-left: 1px solid transparent;
 	border-right: 1px solid transparent;
+}
+
+#cur-city {
+	position: absolute;
+	right: 40px;
+	top: 0;
+	padding: 10px 0;
+	color: white;
+	font-size: 20px;
 }
 
 .active-nav {
