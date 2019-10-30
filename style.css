@@ -208,7 +208,7 @@ body {
 	padding: 20px;
 }
 
-.week-title {
+.weekWD {
 	color: #009595;
 	font-weight: 500;
 	font-size: 20px;
@@ -217,9 +217,9 @@ body {
 
 .day1, .day2, .day3, .day4, .day5 {
 	background-color: #f6f6f6;
-	width: calc(100% - 140px);
-	margin: 0 70px;
+	width: 100%;
 	display: none;
+	
 }
 
 
@@ -242,4 +242,20 @@ body {
 	border-radius: 50%;
 	padding: 5px;
 }
+
+
+.days5 > div > div {
+	display: flex;
+	justify-content: space-evenly;
+	
+} 
+
+.days5 > div > div > span {
+	display: inline-block;
+	width: 60px;
+	margin-top: 5px;
+	text-align: center;
+	
+} 
+
 
