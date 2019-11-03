@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=1170, initial-scale=1">
+  <title>My Weather</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="icon" href="./img/favicon.ico">
+  <link
+    href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap&subset=latin-ext"
+    rel="stylesheet">
+</head>
+
+<body>
+  <div id="msg">
+    <img src="./img/loading.gif" alt="">
+  </div>
+  <header class="page-header">
+    <div class="container">
+      <div class="title">MY WEATHER</div>
+
+
+
+      <div class="wrap-s">
+        <div class="search">
+          <input type="text" id="searchTerm" placeholder="London">
+          <button type="submit" id="searchButton">
+            <i class="fa fa-search">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path
+                  d="M23.111 20.058l-4.977-4.977c.965-1.52 1.523-3.322 1.523-5.251 0-5.42-4.409-9.83-9.829-9.83-5.42 0-9.828 4.41-9.828 9.83s4.408 9.83 9.829 9.83c1.834 0 3.552-.505 5.022-1.383l5.021 5.021c2.144 2.141 5.384-1.096 3.239-3.24zm-20.064-10.228c0-3.739 3.043-6.782 6.782-6.782s6.782 3.042 6.782 6.782-3.043 6.782-6.782 6.782-6.782-3.043-6.782-6.782zm2.01-1.764c1.984-4.599 8.664-4.066 9.922.749-2.534-2.974-6.993-3.294-9.922-.749z" />
+              </svg>
+            </i>
+          </button>
+        </div>
+      </div>
+
+
+    </div>
+  </header>
+  <main>
+    <div class="container">
+      <ul class="nav">
+        <li class="nav1 active-nav">Today</li>
+        <li class="nav2">5-day forecast</li>
+        <li class="nav-hide"></li>
+      </ul>
+      <div id="cur-city">
+        Your City
+      </div>
+
+      <section class="today-block">
+        <div class="current-weather block">
+          <div class="block-title">
+            <span>CURRENT WEATHER</span>
+            <span class="cur-date">11.22.3333</span>
+          </div>
+          <div class="block-contain current">
+            <div class="cur-weather">
+              <img class="cur-weather-icon" src="">
+              <div class="cur-weather-state"></div>
+            </div>
+            <div class="temp">
+
+            </div>
+            <div class="sun">
+              <div class="sun-name">
+                <div>Sunrise</div>
+                <div>Sunset</div>
+                <div>Duration</div>
+              </div>
+              <div class="sun-val">
+                <div class="sunrise"></div>
+                <div class="sunset"></div>
+                <div class="duration"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="hourly block">
+          <div class="block-title">
+            <span>3-HOUR</span>
+          </div>
+          <div class="block-contain hourly-forecast">
+            <div class="hours-forecast"></div>
+            <div class="icons-forecast"></div>
+            <div class="icons-n-forecast"></div>
+            <div class="temp-forecast"></div>
+            <div class="realfeel"></div>
+            <div class="wind-forecast"></div>
+          </div>
+        </div>
+        <div class="nearby block">
+          <div class="block-title">
+            <span>NEARBY PLACES</span>
+            <div id="lat"></div>
+            <div id="lon"></div>
+          </div>
+          <div class="block-contain">
+
+          </div>
+        </div>
+
+
+
+
+
+
+      </section>
+
+      <section class="five-days-block">
+        <div class="weather5 block">
+          <div class="weekday wd1 active-wb"><span class="weekWD"></span><span class="dateWD"></span></div>
+          <div class="weekday wd2"><span class="weekWD"></span><span class="dateWD"></span></div>
+          <div class="weekday wd3"><span class="weekWD"></span><span class="dateWD"></span></div>
+          <div class="weekday wd4"><span class="weekWD"></span><span class="dateWD"></span></div>
+          <div class="weekday wd5"><span class="weekWD"></span><span class="dateWD"></span></div>
+        </div>
+        <div class="days5 block">
+          <div class="day1 active-w">
+            <div class="hours-forecastW"></div>
+            <div class="icons-forecastW"></div>
+            <div class="icons-n-forecastW"></div>
+            <div class="temp-forecastW"></div>
+            <div class="realfeelW"></div>
+            <div class="wind-forecastW"></div>
+          </div>
+          <div class="day2">
+            <div class="hours-forecastW"></div>
+            <div class="icons-forecastW"></div>
+            <div class="icons-n-forecastW"></div>
+            <div class="temp-forecastW"></div>
+            <div class="realfeelW"></div>
+            <div class="wind-forecastW"></div>
+          </div>
+          <div class="day3">
+            <div class="hours-forecastW"></div>
+            <div class="icons-forecastW"></div>
+            <div class="icons-n-forecastW"></div>
+            <div class="temp-forecastW"></div>
+            <div class="realfeelW"></div>
+            <div class="wind-forecastW"></div>
+          </div>
+          <div class="day4">
+            <div class="hours-forecastW"></div>
+            <div class="icons-forecastW"></div>
+            <div class="icons-n-forecastW"></div>
+            <div class="temp-forecastW"></div>
+            <div class="realfeelW"></div>
+            <div class="wind-forecastW"></div>
+          </div>
+          <div class="day5">
+            <div class="hours-forecastW"></div>
+            <div class="icons-forecastW"></div>
+            <div class="icons-n-forecastW"></div>
+            <div class="temp-forecastW"></div>
+            <div class="realfeelW"></div>
+            <div class="wind-forecastW"></div>
+          </div>
+        </div>
+      </section>
+      <section class="not-found">
+        <img src="./img/404.png" alt="">
+        <div class="not-found-descr"></div>
+      </section>
+    </div>
+
+
+
+  </main>
+
+  <footer class="page-footer">
+    <div class="container">
+      <div class="footer-text">
+        <div class="logo"><img src="./img/logo.png" alt="" width="25" height="25"> My Weather</div>
+        
+        All rights reserved &copy;<span class="cur-year"></span>
+
+        <ul class="social">
+            <li>
+              <a href="https://www.facebook.com/" target="_blank">
+               
+              </a>
+            </li>
+            <li>
+                <a href="https://www.instagram.com/" target="_blank">
+                  
+                </a>
+              </li>
+              <li>
+                  <a href="https://www.twitter.com/" target="_blank">
+                    
+                  </a>
+                </li>
+          </ul>
+      </div>
+    </div>
+  </footer>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="./js/index.js"></script>
+</body>
+
+</html>
