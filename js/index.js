@@ -143,6 +143,8 @@ function search(callback) {
 		$('.five-days-block').hide();
 		$('.not-found').css('display', 'flex');
 		$('#cur-city').html('');
+		$('#searchTerm').attr('placeholder','Search');
+		$('#searchTerm').val('');
 		$('.not-found-descr').html('"' + searchCity + '"could not be found.<br>Please enter a different location.');
 
 		if ($('.not-found').css('display', 'flex')) {
@@ -226,6 +228,8 @@ function todayWeather(citySearchCur) {
 	let curCity = json.name;
 	let curCountry = json.sys.country;
 	$('#cur-city').html(curCity + ', ' + curCountry);
+	$('#searchTerm').attr('placeholder', curCity + ', ' + curCountry);
+	$('#searchTerm').val('');
 
 	let icon = json.weather[0].icon;
 	$('.cur-weather-icon').attr('src', 'https://openweathermap.org/img/wn/' + icon + '.png');
